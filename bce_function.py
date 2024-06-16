@@ -14,7 +14,7 @@ def bce_offgrid(y_ture, y_pred):  # 对y_pred正则化的BCE
     # g_z = tf.abs((y_logits+1)/(p+1+epsilon)-1)  # 加epsilon防止除零
     z = y_pred  # z（pred） 应为模型输出值  -0.5~0.5
     p = y_ture  # p（true） 为小数标签 -1 或者 -0.5~0.5
-    g_z = tf.abs((z + 0.56) / (p + 0.56) - 1)  # 防止除零
+    g_z = tf.abs((z + 0.6) / (p + 0.6) - 1)  # 防止除零
     g_z = tf.where(p != -1, g_z, tf.zeros_like(g_z))  # p!=-1时g_z值保留，否则为0 （没这一行会有loss=nan,acc=0
     sigm_gz = 1 / (1+tf.exp(g_z))
     sigm_z = 1/(1+tf.exp(-z))
