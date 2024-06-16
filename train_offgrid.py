@@ -13,6 +13,9 @@ from keras import regularizers
 import pickle
 from micro_f1 import acc_offgrid  # 从 micro_f1.py 中导入 micro_f1 函数
 from bce_function import bce_offgrid
+import time
+start = time.perf_counter()  # 记录时间
+
 
 # 加载数据
 training_set = scipy.io.loadmat('trainoff_set.mat')
@@ -46,11 +49,13 @@ model_R.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
 model_R.summary()
 
 # 训练模型
-history_R = model_R.fit(Signal_eta, Signal_label, epochs=256, batch_size=256, validation_split=0.2, verbose=1)
+history_R = model_R.fit(Signal_eta, Signal_label, epochs=200, batch_size=256, validation_split=0.2, verbose=1)
 
 # 保存训练历史
 with open('history_cnn_offgrid.pkl', 'wb') as file:
     pickle.dump(history_R.history, file)
-
 # 保存模型
 model_R.save('cnn_offgrid.h5')
+
+end = time.perf_counter()
+print('运行时间 : %s 秒'%(end-start))

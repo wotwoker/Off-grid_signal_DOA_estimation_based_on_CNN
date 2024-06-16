@@ -19,7 +19,8 @@ P = length(Phi);         % 定义角度数=180
 kelmArr = (0:kelm-1)+0*randn(1,kelm);
 
 %% 产生theta_train
-thetaOneTest = [ -65 65 ]          %信号角度  
+thetaOneTest = [ 0  30 ] 
+%thetaOneTest = [ -65 65 ]          %信号角度  
 numSignal = length(thetaOneTest);   % 信号源数
 
 %% 产生Signal_eta和Signal_label
@@ -41,4 +42,19 @@ Signal_label(round(thetaOneTest)+91) = ones(1,length(thetaOneTest));
 P_MUSIC = music_doa(X1,numSignal,dd,Phi);    % MUSIC_DOA
 %% 保存数据
 save('OneTestSet.mat','thetaOneTest','Signal_eta','Signal_eta_forC','Signal_label','Phi','P_MUSIC');
+
+
+% figure('Position', [200,100,900, 450]);  % 查看某样本R的实虚部图形
+% subplot(1, 2, 1);  % 显示实部
+% imagesc(Signal_eta(:,:,1));  
+% title('Real Part of R'); colorbar; axis square;  %标题；色块；方形显示
+% subplot(1, 2, 2);  % 显示虚部
+% imagesc(Signal_eta(:,:,2));  
+% title('Imaginary Part of R'); colorbar; axis square;  
+figure();
+plot(Phi,Signal_eta_forC(1,:),'LineWidth',1.5);hold on;
+stem(find(Signal_label(1,:)==1)-91,ones(1,numSignal),'LineWidth',1)
+grid on;xlim([-90,90]); ylim([-0.1,1.1]);xlabel('角度(°)');
+legend('CBF预测','真实角度');hold off;
+
 

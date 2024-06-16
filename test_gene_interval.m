@@ -14,14 +14,14 @@ Phi = phi_start:1:phi_end; % 定义角区间
 P = length(Phi);        % 定义角度数=180
 
 %% 设置测试信号基本参数及默认参数
-snr = 10;         % 默认信噪比
+snr = 0;         % 默认信噪比
 sample = 300;    % 产生n个测试样本
 kelm = 8;         % 默认阵列数量
 snapshot = 512;     % 默认快拍数量
 
 %% 每100个样本产生等间隔的两个角度
 theta1 = [linspace(-60,55,100),linspace(-60,45,100),linspace(-60,30,100)];
-theta2 = [linspace(-60,55,100)+5,linspace(-60,45,100)+15,linspace(-60,30,100)+30];
+theta2 = [linspace(-60,55,100)+5.5,linspace(-60,45,100)+15.6,linspace(-60,30,100)+30.7];
 theta_test = [theta1;theta2];
 theta_test_on = round(theta_test);  %信号角度（整数）
 %% 产生空间谱并保存

@@ -5,7 +5,7 @@ from keras import backend as K  # 即使IDE显示红色错误，代码本身是�
 # 定义micro-F1分数作为性能度量
 def micro_f1(y_true, y_pred):
     """计算微平均F1分数"""
-    y_pred = K.cast(K.greater(y_pred, 0.3), K.floatx())
+    y_pred = K.cast(K.greater(y_pred, 0.5), K.floatx())
     tp = K.sum(K.cast(y_true*y_pred, 'float'), axis=0)
     fp = K.sum(K.cast((1-y_true)*y_pred, 'float'), axis=0)
     fn = K.sum(K.cast(y_true*(1-y_pred), 'float'), axis=0)
@@ -13,7 +13,7 @@ def micro_f1(y_true, y_pred):
     p = tp / (tp + fp + K.epsilon())
     r = tp / (tp + fn + K.epsilon())
 
-    f1 = 2*p*r / (p + r + K.epsilon())
+    f1 = 2*(181/121)*p*r / (p + r + K.epsilon())
     f1 = tf.where(tf.math.is_nan(f1), tf.zeros_like(f1), f1)  # tf.where 函数检查并替换任何的 NaN 值为 0
     return K.mean(f1)
 

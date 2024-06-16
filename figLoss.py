@@ -14,8 +14,9 @@ plt.rcParams['font.sans-serif'] = ['Microsoft YaHei'] # 步骤一（替换sans-s
 plt.rcParams['axes.unicode_minus'] = False   # 步骤二（解决坐标轴负数的负号显示问题）
 # 绘制训练和验证损失
 plt.subplot(1, 2, 1)
-plt.plot(history['loss'], label='网络训练损失值', linewidth=1.5, marker='s', markersize=3, markevery=4)
-plt.plot(history['val_loss'], label='网络验证损失值', linewidth=1.5, marker='o', markersize=3, markevery=4)
+epochs = range(1, len(history['loss']) + 1)
+plt.plot(epochs, history['loss'], label='网络训练损失值', linewidth=1.5, marker='s', markersize=3, markevery=4)
+plt.plot(epochs, history['val_loss'], label='网络验证损失值', linewidth=1.5, marker='o', markersize=3, markevery=4)
 plt.title('Training and Validation Loss', fontsize=12)
 plt.xlabel('训练次数', fontsize=10)
 plt.ylabel('损失值', fontsize=10)
@@ -26,8 +27,9 @@ plt.grid(True)
 plt.subplot(1, 2, 2)
 acc_offgrid_percent= [i * 100 for i in history['acc_offgrid']]
 val_acc_offgrid_percent = [i * 100 for i in history['val_acc_offgrid']]
-plt.plot(acc_offgrid_percent, label='网络训练准确率', linewidth=1.5, marker='s', markersize=3, markevery=4)
-plt.plot(val_acc_offgrid_percent, label='网络验证准确率', linewidth=1.5, marker='o', markersize=3, markevery=4)
+plt.plot(epochs, acc_offgrid_percent, label='网络训练准确率', linewidth=1.5, marker='s', markersize=3, markevery=4)
+plt.plot(epochs, val_acc_offgrid_percent, label='网络验证准确率', linewidth=1.5, marker='o', markersize=3, markevery=4)
+
 # for i in range(0, len(acc_offgrid_percent), 2):
 #     plt.scatter(i, acc_offgrid_percent[i], s=10, marker='s')  # 网络训练准确率的方块点
 #     plt.scatter(i, val_acc_offgrid_percent[i], s=10, marker='o')  # 网络测试准确率的圆点

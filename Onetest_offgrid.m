@@ -19,7 +19,7 @@ P = length(Phi);         % 定义角度数=180
 kelmArr = (0:kelm-1)+0*randn(1,kelm);
 
 %% 产生theta_train
-%thetaOneTest_off = [-31.5837 -8.2913]       %信号角度（含小数）  
+%thetaOneTest_off = [59.52 13.44]       %信号角度（含小数）  
 thetaOneTest_off = [-60 + 120 * rand,-60 + 120 * rand]
 thetaOneTest_on = round(thetaOneTest_off);  %信号角度（整数）
 numSignal = length(thetaOneTest_off);   % 信号源数
@@ -51,3 +51,13 @@ Signal_label_on(round(thetaOneTest_on)+91) = ones(1,length(thetaOneTest_on));
 save('OneTestSet_offgrid.mat','thetaOneTest_off','Signal_eta_off','Signal_label_off'...
      ,'thetaOneTest_on','Signal_eta_on','Signal_label_on','Phi');
 
+ 
+ figure('Position', [200,100,900, 450]);  % 查看某样本R的实虚部图形
+subplot(1, 2, 1);  % 显示实部
+imagesc(Signal_eta_off(:,:,1));  
+title('Real Part of R'); colorbar; axis square;  %标题；色块；方形显示
+subplot(1, 2, 2);  % 显示虚部
+imagesc(Signal_eta_off(:,:,2));  
+title('Imaginary Part of R'); colorbar; axis square;  
+ 
+ 

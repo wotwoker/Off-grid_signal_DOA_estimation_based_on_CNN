@@ -5,17 +5,17 @@ import matplotlib.pyplot as plt
 import micro_f1  # 自定义函数（ micro_f1 函数）
 
 # 加载测试数据
-# test_set = scipy.io.loadmat('OneTestSet.mat')
-# theta_test = test_set['thetaOneTest'][0]  # thetaOneTest存储为一维数组
-# Signal_eta = test_set['Signal_eta']  # (8, 8, 2)
-# Signal_label = test_set['Signal_label'][0]  # 假设为1 x 181数组，展平
-# theta = test_set['Phi'][0]  # 假设为1 x 181数组，展平
+test_set = scipy.io.loadmat('OneTestSet.mat')
+theta_test = test_set['thetaOneTest'][0]  # thetaOneTest存储为一维数组
+Signal_eta = test_set['Signal_eta']  # (8, 8, 2)
+Signal_label = test_set['Signal_label'][0]  # 假设为1 x 181数组，展平
+theta = test_set['Phi'][0]  # 假设为1 x 181数组，展平
 
 # 加载离网格信号测试数据，预测整数部分
-test_set = scipy.io.loadmat('OneTestSet_offgrid.mat')
-theta_test = test_set['thetaOneTest_on'][0]  # thetaOneTest存储为一维数组
-Signal_eta = test_set['Signal_eta_on']  # (8, 8, 2)
-Signal_label = test_set['Signal_label_on'][0]  # 假设为1 x 181数组，展平
+# test_set = scipy.io.loadmat('OneTestSet_offgrid.mat')
+# theta_test = test_set['thetaOneTest_on'][0]  # thetaOneTest存储为一维数组
+# Signal_eta = test_set['Signal_eta_on']  # (8, 8, 2)
+# Signal_label = test_set['Signal_label_on'][0]  # 假设为1 x 181数组，展平
 
 
 # 为模型正确格式化Signal_eta

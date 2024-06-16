@@ -2,7 +2,7 @@
 clear;clc;close all;
 load('cnn_predict_ITVR.mat','estCNN_R'); % 2D-CNN的估计谱
 load('cnn_predict_ITVC.mat','estCNN_C'); % 1D-CNN的估计谱
-load('cnn_predict_ITVoff.mat','estCNN_off'); % 1D-CNN的估计谱
+load('cnn_predict_ITVoff.mat','estCNN_off'); % 2D-CNN的估计谱
 load('test_set_interval.mat','theta_test');
 
 nSignal = size(theta_test,1);    % 信源个数
@@ -16,13 +16,13 @@ for iSample = 1:nsample
 %     cnn_doa_C = reshape(estCNN_C(iSample,:),181,1);
 %     estCnn_C(:,iSample) = getPeak(cnn_doa_C,2);     % CNN_C特征谱的谱峰搜索
 
-    %cnn_doa_R = reshape(estCNN_R(iSample,:),181,1);
-    %estCnn_R(:,iSample) = getPeak(cnn_doa_R,2);     % CNN_R特征谱的谱峰搜索
+%     cnn_doa_R = reshape(estCNN_R(iSample,:),181,1);
+%     estCnn_R(:,iSample) = getPeak(cnn_doa_R,2);     % CNN_R特征谱的谱峰搜索
     
     cnn_doa_on = reshape(estCNN_R(iSample,:),181,1);
     estCnn_on(:,iSample) =getPeak(cnn_doa_on,2);
     theta_rec = zeros(1,length(estCnn_on(:,iSample)));
-    th=-0.6;
+    th=-0.8;
     for i = 1:length(estCnn_on(:,iSample))
         p1=estCnn_on(i,iSample); %整数角度索引值，
         p2=p1+1;
@@ -43,7 +43,7 @@ estCnn_offgrid = sort(estCnn_off, 1, 'ascend');%离网格信号的全部信息
 
 
 column = 1:nsample;
-% 绘制散点图
+% % 绘制on-grid散点图
 % figure; 
 % subplot(1,2,1);
 % scatter(column, estCnn_R(1, :),'*');hold on;% 绘制第一行的数据点
@@ -55,7 +55,7 @@ column = 1:nsample;
 % subplot(1,2,2);
 % scatter(column, estCnn_R(1, :)-theta_test(1, :),'*');hold on;
 % scatter(column, estCnn_R(2, :)-theta_test(2, :),'*');hold on;
-% xlabel('样本索引');ylabel('DOA误差(°)');ylim([-5,5]);
+% xlabel('样本索引');ylabel('DOA误差(°)');ylim([-1,1]);
 
 %绘制离网格估计散点图
 figure; 

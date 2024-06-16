@@ -3,10 +3,15 @@ import keras
 import numpy as np
 import scipy.io
 import micro_f1  # 自定义函数（ micro_f1 函数）
+from micro_f1 import acc_offgrid  # 自定义函数（ micro_f1 函数）
+from bce_function import bce_offgrid
+import time
+
+
 
 # 加载测试数据
-#test_program = scipy.io.loadmat('test_set_snr.mat') # 导入测试集
 test_program = scipy.io.loadmat('test_set_snr.mat') # 导入测试集
+#test_program = scipy.io.loadmat('test_set_snap.mat') # 导入测试集
 Signal_eta = test_program['Signal_eta']  # (variable, 8, 8, 2*nsample)
 
 # 从Signal_eta中提取必要的维度信息
@@ -23,10 +28,22 @@ Signal_eta = Signal_eta.reshape((nVariable, nsample, 2, kelm, kelm)).transpose(0
 est_cnn_R = np.zeros((nVariable, nsample, P))  # DOA空间谱估计结果，(variable,nsample,P)
 # 对每个变量和每个样本进行预测
 cnn_doa_model = keras.models.load_model('cnn_R.h5', custom_objects={'micro_f1': micro_f1})
+# cnn_doa_model = keras.models.load_model('cnn_offgrid.h5', custom_objects={'acc_offgrid': acc_offgrid,
+#                                                                              'bce_offgrid': bce_offgrid})
+start = time.perf_counter()  # 记录时间
 for iVariable in range(nVariable):
     for iSample in range(nsample):
         # 预测一个样本 (1, 8, 8, 2)
+
         sample_to_predict = Signal_eta[iVariable, iSample].reshape(1, kelm, kelm, 2)
-        est_cnn_R[iVariable, iSample, :] = cnn_doa_model.predict(sample_to_predict)
+        est_cnn_R[iVariable, iSample, :] = cnn_doa_model.predict(sample_to_predict)  # 只估计整数
+        #est_cnn_R[iVariable, iSample, :] = np.tanh(cnn_doa_model.predict(sample_to_predict))  # 估计包含小数
 
 scipy.io.savemat('cnn_predict_R.mat', {'estCNN_R': est_cnn_R})
+#scipy.io.savemat('cnn_predict_Rsnap.mat', {'estCNN_R': est_cnn_R})
+
+
+
+
+end = time.perf_counter()
+print('运行时间 : %s 秒'%(end-start))

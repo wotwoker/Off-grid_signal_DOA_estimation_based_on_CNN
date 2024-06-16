@@ -32,11 +32,11 @@ for iThetaTrain = 1:length(theta_train)      % 对于每个训练样本
     A = exp(-1j*2*pi*(0:kelm-1)'*dd*sind(theta_train(:,iThetaTrain)')); % 导向矩阵
     X = A*S0;
     X1 = awgn(X,randi([-10,20]),'measured');    % 加[-10:20]dB的噪声  
-    R=1/snapshot*X1*X1';    %协方差矩阵（2维复数）
+    R=1/snapshot*(X1*X1');    %协方差矩阵（2维复数）
     normR = norm(R);  % 计算R的范数（模长）
     Signal_eta(:,:,1+2*(iThetaTrain-1)) = real(R) / normR;  % 将归一化后的实部赋值
     Signal_eta(:,:,2+2*(iThetaTrain-1)) = imag(R) / normR;  % 将归一化后的虚部赋值
-    Signal_eta_forC(iThetaTrain,:) = cbf_doa(X1,numSignal,dd,Phi);  % 做 MUSIC-DOA估计
+    Signal_eta_forC(iThetaTrain,:) = cbf_doa(X1,numSignal,dd,Phi);  % 做 CBF-DOA估计
     Signal_label(iThetaTrain,round(theta_train(:,iThetaTrain))+91) = ones(1,numSignal);   % 入射信号标签为 1 
 end
 

@@ -9,6 +9,8 @@ import numpy as np
 import scipy.io
 import pickle
 import tensorflow as tf
+import time
+start = time.perf_counter()  # 记录时间
 
 training_set = scipy.io.loadmat('train_set.mat')        # 导入训练数据
 Signal_eta = training_set['Signal_eta_forC']                 # 输入特征 ____ x 181
@@ -41,6 +43,8 @@ history_C = model_C.fit(x=Signal_eta,  # ~x181x1，输入空间谱
 # 保存训练历史
 with open('history_cnn_C.pkl', 'wb') as file_pi:
     pickle.dump(history_C.history, file_pi)
-
 # 保存模型
 model_C.save('cnn_C.h5')
+
+end = time.perf_counter()
+print('运行时间 : %s 秒'%(end-start))

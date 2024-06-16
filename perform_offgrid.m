@@ -14,9 +14,10 @@ thetaOneTest_off
 Signal_eta_int = round(thetaOneTest_off);
 Signal_eta_dec = thetaOneTest_off - round(thetaOneTest_off);
 %% 预测值修正（针对两个信源）
-pj=find(P_cnn_R > 0.8);%峰值类别（整数）
+%pj=find(P_cnn_R > 0.8);%峰值类别（整数）
+pj=getPeak(double(P_cnn_offgrid_tanh),2)+91;%两种找类别的方法
 theta_rec = zeros(1,length(pj));
-th = -0.8; %选择合适的修正阈值           %%改成差值的阈值
+th = -0.6; %选择合适的修正阈值           %%改成差值的阈值
 for i = 1:length(pj)
     p1=pj(i); %整数角度索引值
     p2=p1+1;
